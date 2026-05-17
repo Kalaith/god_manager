@@ -1,10 +1,7 @@
 //! Application state machine.
 
 use crate::screens::{
-    clash::ClashScreen,
-    cultivation::CultivationScreen,
-    end::EndScreen,
-    fallout::FalloutScreen,
+    clash::ClashScreen, cultivation::CultivationScreen, end::EndScreen, fallout::FalloutScreen,
     match_setup::MatchSetupScreen,
 };
 

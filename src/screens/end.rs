@@ -37,6 +37,12 @@ impl EndScreen {
             20.0,
             LIGHTGRAY,
         );
-        draw_text(&format!("Season: {}", data.season), 40.0, 160.0, 20.0, LIGHTGRAY);
+        draw_text(
+            &format!("Season: {}", data.season),
+            40.0,
+            160.0,
+            20.0,
+            LIGHTGRAY,
+        );
     }
 }

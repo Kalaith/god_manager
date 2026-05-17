@@ -3,8 +3,7 @@ use macroquad_toolkit::ui::button;
 
 use crate::state::{
     game_data::{GameData, MatchMode},
-    GameAction,
-    ScreenCommand,
+    GameAction, ScreenCommand,
 };
 
 pub struct ClashScreen {
@@ -82,10 +81,7 @@ impl ClashScreen {
             let left_selection = self.selected.clone();
             self.selected.clear();
             self.selected_right.clear();
-            return ScreenCommand::Action(GameAction::RunClash(
-                left_selection,
-                right_selection,
-            ));
+            return ScreenCommand::Action(GameAction::RunClash(left_selection, right_selection));
         }
         ScreenCommand::None
     }
@@ -139,14 +135,22 @@ impl ClashScreen {
                 LIGHTGRAY,
             );
             if let Some(event) = outcome.log.last() {
-                let side = if event.attacker_is_left { "Left" } else { "Right" };
+                let side = if event.attacker_is_left {
+                    "Left"
+                } else {
+                    "Right"
+                };
                 draw_text(
                     &format!(
                         "Last hit: R{} {} {} dmg (target {})",
                         event.round + 1,
                         side,
                         event.damage,
-                        if event.target_defeated { "defeated" } else { "alive" }
+                        if event.target_defeated {
+                            "defeated"
+                        } else {
+                            "alive"
+                        }
                     ),
                     40.0,
                     545.0,

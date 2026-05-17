@@ -4,9 +4,7 @@ use macroquad_toolkit::ui::button;
 use crate::data::types::GodRole;
 use crate::state::{
     game_data::{GameData, MatchMode},
-    GameAction,
-    ScreenCommand,
-    StateTransition,
+    GameAction, ScreenCommand, StateTransition,
 };
 
 pub struct MatchSetupScreen;
@@ -24,14 +22,23 @@ impl MatchSetupScreen {
             return ScreenCommand::Action(GameAction::SetMode(MatchMode::VsAi));
         }
         if button(40.0, 170.0, 200.0, 44.0, "Start Match") {
-            return ScreenCommand::ActionAndTransition(GameAction::StartMatch, StateTransition::ToCultivation);
+            return ScreenCommand::ActionAndTransition(
+                GameAction::StartMatch,
+                StateTransition::ToCultivation,
+            );
         }
         ScreenCommand::None
     }
 
     pub fn draw(&self, data: &GameData) {
         draw_text("Match Setup", 40.0, 60.0, 32.0, WHITE);
-        draw_text(&format!("Season: {}", data.season), 40.0, 90.0, 20.0, LIGHTGRAY);
+        draw_text(
+            &format!("Season: {}", data.season),
+            40.0,
+            90.0,
+            20.0,
+            LIGHTGRAY,
+        );
         let mode_text = match data.mode {
             MatchMode::Pvp => "Mode: PVP",
             MatchMode::VsAi => "Mode: VS AI",

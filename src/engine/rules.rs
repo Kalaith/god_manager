@@ -9,21 +9,13 @@ pub const CULTIVATION_MAX_PER_STAT: i32 = 4;
 
 pub fn calculate_god_stats(universe: &UniverseStats, role: GodRole) -> GodStats {
     match role {
-        GodRole::Tank => GodStats::new(
-            universe.conflict,
-            universe.belief * 2,
-            universe.innovation,
-        ),
-        GodRole::Striker => GodStats::new(
-            universe.conflict * 2,
-            universe.belief,
-            universe.innovation,
-        ),
-        GodRole::Control => GodStats::new(
-            universe.conflict,
-            universe.belief,
-            universe.innovation * 2,
-        ),
+        GodRole::Tank => GodStats::new(universe.conflict, universe.belief * 2, universe.innovation),
+        GodRole::Striker => {
+            GodStats::new(universe.conflict * 2, universe.belief, universe.innovation)
+        }
+        GodRole::Control => {
+            GodStats::new(universe.conflict, universe.belief, universe.innovation * 2)
+        }
         GodRole::Support => GodStats::new(
             universe.conflict,
             universe.belief + universe.innovation,

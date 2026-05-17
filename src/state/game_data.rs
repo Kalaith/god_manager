@@ -1,14 +1,9 @@
 //! Match data and progression.
 
 use crate::data::types::{
-    CultivationAllocation,
-    God,
-    GodRole,
-    GodStats,
-    PerformanceTag,
-    UniverseStats,
+    CultivationAllocation, God, GodRole, GodStats, PerformanceTag, UniverseStats,
 };
-use crate::engine::combat::{ClashOutcome, Combatant, simulate_clash};
+use crate::engine::combat::{simulate_clash, ClashOutcome, Combatant};
 use crate::engine::fallout::{apply_fallout, apply_stability_loss};
 use crate::engine::match_rules::{evaluate_match_end, resolve_sudden_death, MatchOutcome};
 use crate::engine::rules::{apply_cultivation, calculate_god_stats, roll_fallout};
@@ -63,7 +58,10 @@ impl GameData {
         self.mode = mode;
     }
 
-    pub fn apply_cultivation(&mut self, allocation: CultivationAllocation) -> Result<(), &'static str> {
+    pub fn apply_cultivation(
+        &mut self,
+        allocation: CultivationAllocation,
+    ) -> Result<(), &'static str> {
         self.left_universe = apply_cultivation(&self.left_universe, &allocation)?;
         self.right_universe = apply_cultivation(&self.right_universe, &allocation)?;
         self.recalculate_stats();
@@ -78,7 +76,11 @@ impl GameData {
     }
 
     pub fn top_three_indices(&self, is_left: bool) -> Vec<usize> {
-        let stats = if is_left { &self.left_stats } else { &self.right_stats };
+        let stats = if is_left {
+            &self.left_stats
+        } else {
+            &self.right_stats
+        };
         let mut indices: Vec<usize> = (0..stats.len()).collect();
         indices.sort_by_key(|&idx| -(stats[idx].attack + stats[idx].defense + stats[idx].speed));
         indices.truncate(3);
@@ -99,7 +101,8 @@ impl GameData {
             self.last_roll_right = Some(roll_right);
 
             self.left_universe = apply_fallout(&self.left_universe, roll_left, &mut self.left_gods);
-            self.right_universe = apply_fallout(&self.right_universe, roll_right, &mut self.right_gods);
+            self.right_universe =
+                apply_fallout(&self.right_universe, roll_right, &mut self.right_gods);
 
             apply_performance_traits(&mut self.left_gods, &outcome.left);
             apply_performance_traits(&mut self.right_gods, &outcome.right);
@@ -112,7 +115,8 @@ impl GameData {
             }
         }
 
-        self.last_outcome = evaluate_match_end(self.season, &self.left_universe, &self.right_universe);
+        self.last_outcome =
+            evaluate_match_end(self.season, &self.left_universe, &self.right_universe);
         if self.last_outcome == MatchOutcome::SuddenDeath {
             let sudden = resolve_sudden_death(&self.left_stats, &self.right_stats);
             if sudden != MatchOutcome::SuddenDeath {

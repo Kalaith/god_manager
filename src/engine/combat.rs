@@ -86,9 +86,13 @@ pub fn simulate_clash(left: &[GodStats], right: &[GodStats]) -> ClashOutcome {
                 if team_defeated(&left_team) {
                     break;
                 }
-                if let Some(event) =
-                    attack(&right_team, &mut left_team, attacker_idx, round_index, false)
-                {
+                if let Some(event) = attack(
+                    &right_team,
+                    &mut left_team,
+                    attacker_idx,
+                    round_index,
+                    false,
+                ) {
                     log.push(event);
                 }
             }
