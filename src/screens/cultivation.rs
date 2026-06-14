@@ -4,6 +4,7 @@ use macroquad_toolkit::ui::button;
 use crate::data::types::CultivationAllocation;
 use crate::engine::rules::{CULTIVATION_MAX_PER_STAT, CULTIVATION_POINTS};
 use crate::state::{game_data::GameData, GameAction, ScreenCommand};
+use macroquad_toolkit::ui::draw_ui_text;
 
 pub struct CultivationScreen {
     allocation: CultivationAllocation,
@@ -84,8 +85,8 @@ impl CultivationScreen {
     }
 
     pub fn draw(&self, data: &GameData) {
-        draw_text("Cultivation", 40.0, 60.0, 32.0, WHITE);
-        draw_text(
+        draw_ui_text("Cultivation", 40.0, 60.0, 32.0, WHITE);
+        draw_ui_text(
             &format!(
                 "Belief: {} (+{})",
                 data.left_universe.belief, self.allocation.belief
@@ -95,7 +96,7 @@ impl CultivationScreen {
             22.0,
             LIGHTGRAY,
         );
-        draw_text(
+        draw_ui_text(
             &format!(
                 "Conflict: {} (+{})",
                 data.left_universe.conflict, self.allocation.conflict
@@ -105,7 +106,7 @@ impl CultivationScreen {
             22.0,
             LIGHTGRAY,
         );
-        draw_text(
+        draw_ui_text(
             &format!(
                 "Innovation: {} (+{})",
                 data.left_universe.innovation, self.allocation.innovation
@@ -115,7 +116,7 @@ impl CultivationScreen {
             22.0,
             LIGHTGRAY,
         );
-        draw_text(
+        draw_ui_text(
             &format!(
                 "Points: {}/{}",
                 self.allocation.total_points(),

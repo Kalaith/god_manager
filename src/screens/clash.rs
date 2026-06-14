@@ -5,6 +5,7 @@ use crate::state::{
     game_data::{GameData, MatchMode},
     GameAction, ScreenCommand,
 };
+use macroquad_toolkit::ui::draw_ui_text;
 
 pub struct ClashScreen {
     selected: Vec<usize>,
@@ -36,7 +37,7 @@ impl ClashScreen {
             y += 36.0;
         }
 
-        draw_text(
+        draw_ui_text(
             &format!("Left selected: {}/3", self.selected.len()),
             40.0,
             120.0,
@@ -74,7 +75,7 @@ impl ClashScreen {
             MatchMode::VsAi => format!("Right selected (AI): {}/3", right_count),
             MatchMode::Pvp => format!("Right selected: {}/3", right_count),
         };
-        draw_text(&right_label, 320.0, 120.0, 18.0, LIGHTGRAY);
+        draw_ui_text(&right_label, 320.0, 120.0, 18.0, LIGHTGRAY);
 
         let can_resolve = self.selected.len() == 3 && right_selection.len() == 3;
         if can_resolve && button(40.0, 320.0, 200.0, 44.0, "Resolve Clash") {
@@ -87,23 +88,23 @@ impl ClashScreen {
     }
 
     pub fn draw(&self, data: &GameData) {
-        draw_text("Clash", 40.0, 60.0, 32.0, WHITE);
-        draw_text("Select 3 gods", 40.0, 100.0, 20.0, LIGHTGRAY);
-        draw_text("Selected:", 40.0, 360.0, 18.0, LIGHTGRAY);
+        draw_ui_text("Clash", 40.0, 60.0, 32.0, WHITE);
+        draw_ui_text("Select 3 gods", 40.0, 100.0, 20.0, LIGHTGRAY);
+        draw_ui_text("Selected:", 40.0, 360.0, 18.0, LIGHTGRAY);
         let mut y = 385.0;
         for idx in &self.selected {
             if let Some(god) = data.left_gods.get(*idx) {
-                draw_text(&god.name, 40.0, y, 18.0, LIGHTGRAY);
+                draw_ui_text(&god.name, 40.0, y, 18.0, LIGHTGRAY);
                 y += 20.0;
             }
         }
 
         if data.mode == MatchMode::Pvp {
-            draw_text("Selected (P2):", 320.0, 360.0, 18.0, LIGHTGRAY);
+            draw_ui_text("Selected (P2):", 320.0, 360.0, 18.0, LIGHTGRAY);
             let mut y = 385.0;
             for idx in &self.selected_right {
                 if let Some(god) = data.right_gods.get(*idx) {
-                    draw_text(&god.name, 320.0, y, 18.0, LIGHTGRAY);
+                    draw_ui_text(&god.name, 320.0, y, 18.0, LIGHTGRAY);
                     y += 20.0;
                 }
             }
@@ -112,22 +113,22 @@ impl ClashScreen {
         match data.mode {
             MatchMode::VsAi => {
                 let right_indices = data.top_three_indices(false);
-                draw_text("AI picks:", 320.0, 100.0, 20.0, LIGHTGRAY);
+                draw_ui_text("AI picks:", 320.0, 100.0, 20.0, LIGHTGRAY);
                 let mut y = 130.0;
                 for idx in right_indices {
                     if let Some(god) = data.right_gods.get(idx) {
-                        draw_text(&god.name, 320.0, y, 20.0, LIGHTGRAY);
+                        draw_ui_text(&god.name, 320.0, y, 20.0, LIGHTGRAY);
                         y += 24.0;
                     }
                 }
             }
             MatchMode::Pvp => {
-                draw_text("Player 2 selects 3", 320.0, 100.0, 20.0, LIGHTGRAY);
+                draw_ui_text("Player 2 selects 3", 320.0, 100.0, 20.0, LIGHTGRAY);
             }
         }
 
         if let Some(outcome) = &data.last_clash {
-            draw_text(
+            draw_ui_text(
                 &format!("Last clash events: {}", outcome.log.len()),
                 40.0,
                 520.0,
@@ -140,7 +141,7 @@ impl ClashScreen {
                 } else {
                     "Right"
                 };
-                draw_text(
+                draw_ui_text(
                     &format!(
                         "Last hit: R{} {} {} dmg (target {})",
                         event.round + 1,

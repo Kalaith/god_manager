@@ -6,6 +6,7 @@ use crate::state::{
     game_data::{GameData, MatchMode},
     GameAction, ScreenCommand, StateTransition,
 };
+use macroquad_toolkit::ui::draw_ui_text;
 
 pub struct MatchSetupScreen;
 
@@ -31,8 +32,8 @@ impl MatchSetupScreen {
     }
 
     pub fn draw(&self, data: &GameData) {
-        draw_text("Match Setup", 40.0, 60.0, 32.0, WHITE);
-        draw_text(
+        draw_ui_text("Match Setup", 40.0, 60.0, 32.0, WHITE);
+        draw_ui_text(
             &format!("Season: {}", data.season),
             40.0,
             90.0,
@@ -43,13 +44,13 @@ impl MatchSetupScreen {
             MatchMode::Pvp => "Mode: PVP",
             MatchMode::VsAi => "Mode: VS AI",
         };
-        draw_text(mode_text, 40.0, 110.0, 20.0, LIGHTGRAY);
-        draw_text("Roster (P1)", 40.0, 160.0, 24.0, WHITE);
+        draw_ui_text(mode_text, 40.0, 110.0, 20.0, LIGHTGRAY);
+        draw_ui_text("Roster (P1)", 40.0, 160.0, 24.0, WHITE);
 
         let mut y = 190.0;
         for god in &data.left_gods {
             let role = role_label(god.role);
-            draw_text(
+            draw_ui_text(
                 &format!("{} - {} ({})", god.name, role, god.domain),
                 40.0,
                 y,
@@ -59,11 +60,11 @@ impl MatchSetupScreen {
             y += 24.0;
         }
 
-        draw_text("Roster (P2)", 380.0, 160.0, 24.0, WHITE);
+        draw_ui_text("Roster (P2)", 380.0, 160.0, 24.0, WHITE);
         let mut y = 190.0;
         for god in &data.right_gods {
             let role = role_label(god.role);
-            draw_text(
+            draw_ui_text(
                 &format!("{} - {} ({})", god.name, role, god.domain),
                 380.0,
                 y,

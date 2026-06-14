@@ -2,6 +2,7 @@ use macroquad::prelude::*;
 use macroquad_toolkit::ui::button;
 
 use crate::state::{game_data::GameData, GameAction, ScreenCommand};
+use macroquad_toolkit::ui::draw_ui_text;
 
 pub struct FalloutScreen;
 
@@ -18,8 +19,8 @@ impl FalloutScreen {
     }
 
     pub fn draw(&self, data: &GameData) {
-        draw_text("Fallout", 40.0, 60.0, 32.0, WHITE);
-        draw_text(
+        draw_ui_text("Fallout", 40.0, 60.0, 32.0, WHITE);
+        draw_ui_text(
             &format!(
                 "Left stability: {}  Right stability: {}",
                 data.left_universe.stability, data.right_universe.stability
